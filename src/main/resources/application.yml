@@ -1,0 +1,9 @@
+server.port: 9000
+ 
+couchbase:
+  host: localhost
+  bucket:
+    name: Test
+    user:
+      name: Vadim
+      password: wadim888
