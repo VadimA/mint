@@ -1,6 +1,6 @@
 package org.neo.mint.controller;
 
-import org.neo.mint.db.PersonRepository;
+import org.neo.mint.db.repository.PersonRepository;
 import org.neo.mint.db.domain.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
