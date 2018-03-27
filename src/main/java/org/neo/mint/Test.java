@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 /**
  * Created by vanosov on 20.03.2018.
@@ -12,11 +13,14 @@ public class Test {
 
         public static void main(String[] args)  throws IOException {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            String [] input = br.readLine().split(" ");
-            System.out.println("Length = " + input.length);
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+            StringBuilder text = new StringBuilder();
+            String line;
+            while( (line = br.readLine()) != null) {
+                text.append(line);
+            }
+            String [] input = text.toString().split(" ");
             for(int i = 0; i < input.length-1; i++){
-                bw.write(args[i] + "\t1");
+                System.out.println(input[i] + "\t1");
             }
     }
 }

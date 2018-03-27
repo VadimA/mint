@@ -25,16 +25,12 @@ public class PersonRepository {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonRepository.class);
 
-    @Autowired
-    @Qualifier("personBucketName")
     private Bucket bucket;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
     private Serializer<Person> serializer;
 
-    public PersonRepository(){
+    @Autowired
+    public PersonRepository(@Qualifier(value = "personBucketName") Bucket bucket, ObjectMapper objectMapper){
+        this.bucket = bucket;
         this.serializer = new Serializer<>(objectMapper, Person.class);
     }
 

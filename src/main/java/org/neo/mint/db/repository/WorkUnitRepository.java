@@ -23,16 +23,12 @@ public class WorkUnitRepository {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkUnitRepository.class);
 
-    @Autowired
-    @Qualifier("workUnitBucket")
     private Bucket bucket;
-
-    @Autowired
-    ObjectMapper objectMapper;
-
     private Serializer<WorkUnit> serializer;
 
-    public WorkUnitRepository(){
+    @Autowired
+    public WorkUnitRepository(@Qualifier(value = "workUnitBucket") Bucket bucket, ObjectMapper objectMapper){
+        this.bucket = bucket;
         this.serializer = new Serializer<>(objectMapper, WorkUnit.class);
     }
 
