@@ -21,8 +21,11 @@ public class CouchbaseConnector {
     @Value("${couchbase.host}")
     private String host;
 
-    @Value("${couchbase.bucket.name}")
-    private String bucketName;
+    @Value("${couchbase.bucket.name.person}")
+    private String personBucketName;
+
+    @Value("${couchbase.bucket.name.workunit}")
+    private String workUnitBucketName;
 
     @Value("${couchbase.bucket.user.name}")
     private String userName;
@@ -40,8 +43,15 @@ public class CouchbaseConnector {
 
     @Bean
     @ConditionalOnBean(Cluster.class)
-    public Bucket bucket(Cluster cluster) {
-        LOGGER.info("Opening bucket with name [{}]", bucketName);
-        return cluster.openBucket(bucketName);
+    public Bucket personBucketName(Cluster cluster) {
+        LOGGER.info("Opening bucket with name [{}]", personBucketName);
+        return cluster.openBucket(personBucketName);
+    }
+
+    @Bean
+    @ConditionalOnBean(Cluster.class)
+    public Bucket workUnitBucket(Cluster cluster) {
+        LOGGER.info("Opening bucket with name [{}]", workUnitBucketName);
+        return cluster.openBucket(workUnitBucketName);
     }
 }

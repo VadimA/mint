@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -46,5 +49,13 @@ public class WorkUnitController {
     public ResponseEntity<HttpStatus> deleteWorkUnit(@PathVariable String name) {
         workUnitRepository.delete(name);
         return ResponseEntity.noContent().build();
+    }
+
+    public static void main(String[] args)  throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String [] input = br.readLine().split(" ");
+        for(int i = 0; i < input.length; i++){
+            System.out.print(args[i] + "\t1");
+        }
     }
 }

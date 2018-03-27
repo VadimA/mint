@@ -3,7 +3,9 @@ server.port: 9000
 couchbase:
   host: localhost
   bucket:
-    name: Test
+    name:
+      person: Test
+      workunit: WorkUnit
     user:
       name: Vadim
       password: wadim888

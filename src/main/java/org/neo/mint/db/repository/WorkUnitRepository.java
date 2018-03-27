@@ -10,6 +10,7 @@ import org.neo.mint.utils.Serializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -22,12 +23,16 @@ public class WorkUnitRepository {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkUnitRepository.class);
 
+    @Autowired
+    @Qualifier("workUnitBucket")
     private Bucket bucket;
-    private Serializer<WorkUnit> serializer;
 
     @Autowired
-    public WorkUnitRepository(Bucket bucket, ObjectMapper objectMapper){
-        this.bucket = bucket;
+    ObjectMapper objectMapper;
+
+    private Serializer<WorkUnit> serializer;
+
+    public WorkUnitRepository(){
         this.serializer = new Serializer<>(objectMapper, WorkUnit.class);
     }
 

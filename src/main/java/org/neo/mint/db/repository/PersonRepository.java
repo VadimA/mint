@@ -11,6 +11,7 @@ import org.neo.mint.utils.Serializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -24,12 +25,16 @@ public class PersonRepository {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonRepository.class);
 
+    @Autowired
+    @Qualifier("personBucketName")
     private Bucket bucket;
-    private Serializer<Person> serializer;
 
     @Autowired
-    public PersonRepository(Bucket bucket, ObjectMapper objectMapper){
-        this.bucket = bucket;
+    private ObjectMapper objectMapper;
+
+    private Serializer<Person> serializer;
+
+    public PersonRepository(){
         this.serializer = new Serializer<>(objectMapper, Person.class);
     }
 
