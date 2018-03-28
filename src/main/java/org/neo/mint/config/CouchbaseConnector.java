@@ -5,6 +5,7 @@ import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.CouchbaseCluster;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +44,7 @@ public class CouchbaseConnector {
 
     @Bean
     @ConditionalOnBean(Cluster.class)
+    @Qualifier(value = "personBucketName")
     public Bucket personBucketName(Cluster cluster) {
         LOGGER.info("Opening bucket with name [{}]", personBucketName);
         return cluster.openBucket(personBucketName);
@@ -50,6 +52,7 @@ public class CouchbaseConnector {
 
     @Bean
     @ConditionalOnBean(Cluster.class)
+    @Qualifier(value = "workUnitBucket")
     public Bucket workUnitBucket(Cluster cluster) {
         LOGGER.info("Opening bucket with name [{}]", workUnitBucketName);
         return cluster.openBucket(workUnitBucketName);

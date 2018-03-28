@@ -13,7 +13,7 @@ import lombok.Setter;
 public class Person {
 
     private String name;
-    private int age;
-    private String city;
+    private String scope;
+    private String phoneNumber;
 
 }

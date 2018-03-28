@@ -23,14 +23,14 @@ public class WorkUnitRepository {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkUnitRepository.class);
 
+    @Autowired
+    @Qualifier(value = "workUnitBucket")
     private Bucket bucket;
-    private Serializer<WorkUnit> serializer;
 
     @Autowired
-    public WorkUnitRepository(@Qualifier(value = "workUnitBucket") Bucket bucket, ObjectMapper objectMapper){
-        this.bucket = bucket;
-        this.serializer = new Serializer<>(objectMapper, WorkUnit.class);
-    }
+    ObjectMapper objectMapper;
+
+    private Serializer<WorkUnit> serializer = new Serializer<>(objectMapper, WorkUnit.class);
 
     public Optional<WorkUnit> findById(String name){
         Optional<String> json = Optional.ofNullable(bucket.get(name))

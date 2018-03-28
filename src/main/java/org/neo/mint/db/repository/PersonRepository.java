@@ -25,14 +25,14 @@ public class PersonRepository {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonRepository.class);
 
+    @Autowired
+    @Qualifier(value = "personBucketName")
     private Bucket bucket;
-    private Serializer<Person> serializer;
 
     @Autowired
-    public PersonRepository(@Qualifier(value = "personBucketName") Bucket bucket, ObjectMapper objectMapper){
-        this.bucket = bucket;
-        this.serializer = new Serializer<>(objectMapper, Person.class);
-    }
+    ObjectMapper objectMapper;
+
+    private Serializer<Person> serializer = new Serializer<>(objectMapper, Person.class);
 
     public Optional<Person> findById(String name){
         Optional<String> json = Optional.ofNullable(bucket.get(name))
