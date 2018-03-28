@@ -7,7 +7,6 @@ import com.couchbase.client.java.document.json.JsonObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.neo.mint.db.domain.Person;
-import org.neo.mint.utils.Serializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,25 +31,25 @@ public class PersonRepository {
     @Autowired
     ObjectMapper objectMapper;
 
-    private Serializer<Person> serializer = new Serializer<>(objectMapper, Person.class);
-
     public Optional<Person> findById(String name){
         Optional<String> json = Optional.ofNullable(bucket.get(name))
                 .map(JsonDocument::content)
                 .map(JsonObject::toString);
-
         if (json.isPresent()) {
-            return serializer.deserialize(json.get());
+            try {
+                return Optional.ofNullable(objectMapper.readValue(json.get(), Person.class));
+            } catch (IOException e) {
+                LOGGER.warn("Failed to deserialize person from json {}", json.get());
+            }
         }
         return Optional.empty();
     }
 
     public void save(Person person) {
-        Optional<String> json = serializer.serialize(person);
-        if(json.isPresent()) {
-            bucket.upsert(RawJsonDocument.create(person.getName(), json.get()));
+        try {
+            bucket.upsert(RawJsonDocument.create(person.getName(), objectMapper.writeValueAsString(person)));
             LOGGER.info("Saved person: {}", person);
-        } else {
+        } catch (JsonProcessingException e) {
             LOGGER.warn("Failed to save user {}", person);
         }
     }
