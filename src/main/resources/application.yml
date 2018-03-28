@@ -9,3 +9,14 @@ couchbase:
     user:
       name: Vadim
       password: wadim888
+
+okta:
+  oauth2:
+    issuer: https://dev-260786-admin.oktapreview.com/oauth2/default
+    clientId: 0oaehjqzhcuSEHaLm0h7
+    clientSecret: 3m09oExKv3RB8pHtzMoCf_jRMLmQxzXyEupCFiO_
+
+security:
+  oauth2:
+    sso:
+      loginPath: /authorization-code/callback
