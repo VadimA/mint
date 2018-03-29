@@ -10,13 +10,16 @@ couchbase:
       name: Vadim
       password: wadim888
 
-okta:
-  oauth2:
-    issuer: https://dev-260786-admin.oktapreview.com/oauth2/default
-    clientId: 0oaehjqzhcuSEHaLm0h7
-    clientSecret: 3m09oExKv3RB8pHtzMoCf_jRMLmQxzXyEupCFiO_
-
 security:
   oauth2:
-    sso:
-      loginPath: /authorization-code/callback
+    client:
+      clientId: 0oaehjqzhcuSEHaLm0h7
+      clientSecret: 3m09oExKv3RB8pHtzMoCf_jRMLmQxzXyEupCFiO_
+      # From Authorization Server's metadata
+      accessTokenUri: https://dev-260786.oktapreview.com/oauth2/default/v1/token
+      userAuthorizationUri: https://dev-260786.oktapreview.com/oauth2/default/v1/authorize
+      clientAuthenticationScheme: form
+      scope: openid profile email
+    resource:
+      # from your Auth Server's metadata, check .well-known/openid-configuration if not in .well-known/oauth-authorization-server
+      userInfoUri: https://dev-260786.oktapreview.com/oauth2/default/v1/userinfo
